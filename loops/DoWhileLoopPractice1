@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class DoWhileLoopPractice1 {
+    public static void main(String[] args) {
+// gues the true number
+        Scanner input = new Scanner(System.in);
+        int secretNumber = 5; // fixed number
+        int guess;
+
+        do {
+            System.out.print("Your Guess (1-10): ");
+            guess = input.nextInt();
+            if (guess != secretNumber) {
+                System.out.println("Wrong, try again!");
+            }
+        } while (guess != secretNumber);
+
+        System.out.println("Good, true guess!");
+    }
+}
