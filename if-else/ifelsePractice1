@@ -1,0 +1,31 @@
+import java.util.Scanner;
+public class IfElsePractice1 {
+
+	public static void main(String[] args) {
+		// Code the program that displays the status of the numbers entered by the user "greather
+		// than or equals to 50" or "less than 50" until the users enters zero.
+		
+		System.out.println("Please enter the number :");
+		Scanner input = new Scanner(System.in);
+		int number = input.nextInt();
+		
+		while(number != 0)
+		{
+			if(number>=50)
+			{
+				System.out.println("The number is greather than or equals to 50");
+			}
+			else
+			{
+			 	System.out.println("The number is less than 50");
+			}
+			
+			System.out.println("Please enter the another number to check :");
+			number = input.nextInt();
+		}
+		
+		
+
+	}
+
+}
