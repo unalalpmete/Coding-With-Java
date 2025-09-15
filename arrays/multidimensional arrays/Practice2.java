@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class SumOfMatrixElements {
+public class Practice2 {
 
 	public static void main(String[] args) {
 		// Read a 3x3 matrix and calculate the sum of elements
