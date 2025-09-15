@@ -1,0 +1,34 @@
+import java.util.Scanner;
+public class Practice3 {
+
+	public static void main(String[] args) {
+		 // Grades in array and their average
+
+		Scanner input = new Scanner(System.in);
+		
+		int students = 2;
+		int lessons = 3;
+		
+		int[][] grades = new int[students][lessons];
+		
+		// create the array with grades
+		for(int i=0; i<students; i++) {
+			System.out.println("Enter grades for studenr " + (i+1) + ":");
+			for(int j=0; j<lessons; j++) {
+				System.out.print("Lesson " + (j+1) + ":");
+				grades[i][j] = input.nextInt(); 
+			}
+		}
+		
+		for(int i=0; i<students; i++) {
+			int sum = 0;
+			for(int j=0; j<lessons; j++) {
+				sum = sum + grades[i][j];
+			}
+			double avg = sum / lessons;
+            System.out.println("Average Grade of Student " + (i + 1) + ": " + avg);
+		}
+		
+	}
+
+}
