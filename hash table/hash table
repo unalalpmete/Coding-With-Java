@@ -1,0 +1,69 @@
+import java.util.LinkedList;
+
+
+ // 'Separate Chaining' (Zincirleme) yöntemiyle 
+ // basit bir Hash Table implementasyonunu gösterir.
+ 
+public class CustomHashTable {
+    
+    // Her bir zincir parcası bir Linked List tutar
+    private LinkedList<Entry>[] table;
+    private int capacity;
+
+    static class Entry {
+        String key;
+        String value;
+
+        Entry(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    public CustomHashTable(int capacity) {
+        this.capacity = capacity;
+        table = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            table[i] = new LinkedList<>();
+        }
+    }
+
+    // 1. Hash Fonksiyonu: Anahtarı bir indekse dönüştürür
+    private int hash(String key) {
+        return Math.abs(key.hashCode()) % capacity;
+    }
+
+    // 2. Ekleme İşlemi (Put)
+    public void put(String key, String value) {
+        int index = hash(key);
+        for (Entry entry : table[index]) {
+            if (entry.key.equals(key)) {
+                entry.value = value; // Anahtar varsa güncelle
+                return;
+            }
+        }
+        table[index].add(new Entry(key, value)); // Yoksa yeni ekle
+        System.out.println("Eklendi: " + key + " -> " + value + " (Index: " + index + ")");
+    }
+
+    // 3. Veri Getirme (Get)
+    public String get(String key) {
+        int index = hash(key);
+        for (Entry entry : table[index]) {
+            if (entry.key.equals(key)) {
+                return entry.value;
+            }
+        }
+        return null; // Bulunamadı
+    }
+
+    public static void main(String[] args) {
+        CustomHashTable ht = new CustomHashTable(10);
+
+        ht.put("Java", "Programlama Dili");
+        ht.put("Python", "Veri Bilimi Dili");
+        ht.put("Go", "Sistem Dili");
+
+        System.out.println("Sorgu 'Java': " + ht.get("Java"));
+    }
+}
