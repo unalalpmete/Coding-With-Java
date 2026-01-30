@@ -1,0 +1,55 @@
+import java.util.*;
+
+
+// Adjacency List kullanarak 
+// basit bir Yönsüz Graf (Undirected Graph) gösterimi
+
+public class GraphImplementation {
+
+    //  Her düğümün (Integer) bir komşu listesi (List<Integer>) var
+    private Map<Integer, List<Integer>> adjList;
+
+    public GraphImplementation() {
+        adjList = new HashMap<>();
+    }
+
+    // Düğüm Ekleme
+    public void addVertex(int vertex) {
+        adjList.putIfAbsent(vertex, new ArrayList<>());
+    }
+
+    // Kenar Ekleme 
+    public void addEdge(int source, int destination) {
+        addVertex(source);
+        addVertex(destination);
+
+        // Yönsüz graf olduğu için iki taraflı ekleme yapmalıyık
+        adjList.get(source).add(destination);
+        adjList.get(destination).add(source);
+    }
+
+    // Grafı Yazdırma
+    public void printGraph() {
+        for (var entry : adjList.entrySet()) {
+            System.out.print("Düğüm " + entry.getKey() + " -> Komşuları: ");
+            for (Integer neighbor : entry.getValue()) {
+                System.out.print(neighbor + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        GraphImplementation graph = new GraphImplementation();
+
+        // Bir sosyal ağ simülasyonu (Arkadaşlıklar)
+        graph.addEdge(1, 2); // 1 ve 2 arkadaş
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+
+        System.out.println("Graf Yapısı :");
+        graph.printGraph();
+    }
+}
