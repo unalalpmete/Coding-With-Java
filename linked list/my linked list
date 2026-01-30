@@ -1,0 +1,63 @@
+
+public class MyLinkedList {
+    
+	// MyLinkedList
+	
+	// 1. Düğüm Yapısı (Inner Class)
+	static class Node {
+		int data; // saklayacagı deger
+		Node next; // sonraki node adresi
+
+		Node(int data) { //  yapıcı metodumuz
+			this.data = data;
+			this.next = null;
+		}
+	}
+
+	Node head; // listeni baslangıc noktası
+
+	// 2. Başa Eleman Ekleme 
+	public void addFirst(int data) {
+		Node newNode = new Node(data);
+		newNode.next = head; // yeni dügüm eski bası gösterir
+		head = newNode; // Başık artık yeni düğüm olur
+	}
+	
+	// 3. Sona Eleman Ekleme 
+	public void addLast(int data) {
+		Node newNode = new Node(data);
+		if(head == null) {
+			head = newNode;
+			return;
+		}
+		Node temp = head;
+		while(temp.next != null) { // Son düğümü bulana kadar gezmek lzm
+			temp = temp.next;
+		}
+		temp.next = newNode;
+	}
+	
+	// 4. Listeyi Yazdırma 
+	public void printList() {
+		Node temp = head;
+		System.out.print("Liste: ");
+		while(temp != null) {
+			System.out.print(temp.data + " -> ");
+            temp = temp.next;
+		}
+		System.out.println("null");
+	}
+	
+	
+	public static void main(String[] args) {
+		MyLinkedList list = new MyLinkedList();
+
+		list.addLast(10);
+		list.addLast(20);
+		list.addFirst(5); // Başa ekledik
+
+		list.printList(); // Çıktı: 5 -> 10 -> 20 -> null
+
+	}
+
+}
