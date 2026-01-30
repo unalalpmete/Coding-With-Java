@@ -1,0 +1,74 @@
+
+public class MyQueue {
+    private int maxSize;
+    private int[] queueArray;
+    private int front;  // Ön taraf (eleman çıkarılan yer)
+    private int rear;   // Arka taraf (eleman eklenen yer)
+    private int nItems; // Kuyruktaki mevcut eleman sayısı
+
+    public MyQueue(int size) {
+        this.maxSize = size;
+        this.queueArray = new int[maxSize];
+        this.front = 0;
+        this.rear = -1;
+        this.nItems = 0;
+    }
+
+    // 1. Kuyruğa Ekleme (Enqueue) - O(1)
+    public void enqueue(int value) {
+        if (isFull()) {
+            System.out.println("Hata: Kuyruk dolu " + value + " eklenemedi.");
+            return;
+        }
+        // Dairesel yapı: rear sona gelirse başa dön
+        if (rear == maxSize - 1) {
+            rear = -1;
+        }
+        queueArray[++rear] = value;
+        nItems++;
+        System.out.println("Sıraya girdi: " + value);
+    }
+
+    // 2. Kuyruktan Çıkarma (Dequeue) - O(1)
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Hata: Kuyruk bos");
+            return -1;
+        }
+        int temp = queueArray[front++];
+        // Dairesel yapı: front sona gelirse başa dön
+        if (front == maxSize) {
+            front = 0;
+        }
+        nItems--;
+        return temp;
+    }
+
+    // 3. Önü Görme (Peek) - O(1)
+    public int peek() {
+        if (isEmpty()) return -1;
+        return queueArray[front];
+    }
+
+    public boolean isEmpty() {
+        return (nItems == 0);
+    }
+
+    public boolean isFull() {
+        return (nItems == maxSize);
+    }
+
+    public static void main(String[] args) {
+        MyQueue queue = new MyQueue(3);
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        System.out.println("En öndeki: " + queue.peek());
+        System.out.println("İşlemi bitti, çıktı: " + queue.dequeue());
+        System.out.println("Yeni öndeki: " + queue.peek());
+
+        queue.enqueue(40); // Dairesel yapı sayesinde boşalan yere ekler
+    }
+}
