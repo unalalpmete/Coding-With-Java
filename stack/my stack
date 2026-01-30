@@ -1,0 +1,68 @@
+
+public class MyStack {
+
+	private int maxSize;
+    private int[] stackArray;
+    private int top; // En üstteki elemanın indeksini tutar
+    
+    // Yapıcı Metot (Constructor)
+    public MyStack(int size) {
+    	this.maxSize = size;
+    	this.stackArray = new int[maxSize];
+    	this.top = -1; // baslangıcta stack bos old icin indeks -1
+    }
+	
+    // 1. Ekleme islemi (Push) 
+    public void push(int value) {
+    	if(isFull()) {
+    		System.out.println("Hata: Stack dolu! " + value + " eklenemedi.");
+            return;
+    	}
+        stackArray[++top] = value; // top'u artır ve değeri yerleştir
+    	System.out.println("Eklendi: " + value);
+    }
+	
+    // 2. Çıkarma İşlemi (Pop)
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Hata: Stack boş!");
+            return -1;
+        }
+        return stackArray[top--]; // Değeri döndür ve top'u azalt
+    }
+	
+    // 3. En Üsttekini Görme (Peek) 
+    public int peek() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return stackArray[top];
+    }
+    
+    // Yardımcı Kontroller
+    public boolean isEmpty() {
+        return (top == -1);
+    }
+
+    public boolean isFull() {
+        return (top == maxSize - 1);
+    }
+
+    
+	public static void main(String[] args) {
+		MyStack stack = new MyStack(5);
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        System.out.println("En üstteki eleman (Peek): " + stack.peek());
+        
+        System.out.println("Çıkarılan eleman (Pop): " + stack.pop());
+        System.out.println("Şimdi en üstteki: " + stack.peek());
+        
+        System.out.println("Stack boş mu? " + stack.isEmpty());
+
+	}
+
+}
