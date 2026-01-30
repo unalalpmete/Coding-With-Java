@@ -1,0 +1,107 @@
+
+public class ArraysOperationsPlus {
+
+	public static void main(String[] args) {
+		int[] myArr = new int[10];
+		int currentSize = 0;
+		myArr[currentSize++] = 10; // 0. indexteki degere 10 ata ve indexi 1 arttır. 
+		myArr[currentSize++] = 20;
+		myArr[currentSize++] = 30;
+		myArr[currentSize++] = 40;
+		
+		System.out.println("Baslangic Dizisi:");
+		printArray(myArr, currentSize);
+		
+		// DİZİYİ TERSİNE ÇEVİRME
+		reverseArray(myArr, currentSize);
+    System.out.println("\nTersine Çevrilmiş Dizi (In-place):");
+    printArray(myArr, currentSize);
+
+    // DIZIYI DONDURME 
+    // Diziyi 1 birim sağa kaydırırsak son eleman başa gelms olru.
+    rotateRight(myArr, currentSize);
+    System.out.println("\n1 Birim Sağa Döndürüldü:");
+    printArray(myArr, currentSize);
+
+    // IKI SIRALI DIZIYI BIRLESTIRME 
+    int[] arr1 = {1, 3, 5};
+    int[] arr2 = {2, 4, 6, 8};
+    int[] merged = mergeSortedArrays(arr1, arr2);
+    System.out.println("\nİki Sıralı Dizi Birleştirildi:");
+    printArray(merged, merged.length);
+	}
+
+	public static void reverseArray(int[] arr, int size) {
+		int start = 0;
+		int end = size - 1; // son eleman 4 ise(1,2,3,4) indexi 3 tur
+		while(start < end) {
+			// Swap yer degistirme islemi
+			// diziyi tersine döndürmek icin
+			int temp = arr[start];
+			arr[start] = arr[end];
+			arr[end] = temp;
+			
+			start++;
+			end--;
+		}
+	}
+	
+	
+  // Diziyi bir birim sağa döndürür.
+  // Son elemanı saklar, diğerlerini sağa kaydırıp saklananı başa koyar.
+     
+	public static void rotateRight(int[] arr, int size) {
+		int lastElement = arr[size - 1];
+		// sondan baslayarak elemanlari 1 birim saga kaydır
+		for(int i = size - 1; i>0; i--) {
+			arr[i] = arr[i - 1];
+		}
+		arr[0] = lastElement;
+	}
+	
+	// İki sıralı diziyi tek bir sıralı dizi olarak birleştirir.
+
+	public static int[] mergeSortedArrays(int[] arr1, int[] arr2) {
+		int[] result = new int[arr1.length + arr2.length];
+		int i = 0; // arr1 için işaretçi
+        int j = 0; // arr2 için işaretçi
+        int k = 0; // result için işaretçi
+        
+        while(i < arr1.length && j < arr2.length) {
+        	if(arr1[i] < arr2[j]) {
+        		result[k] = arr1[i];
+        		k++;
+        		i++;
+        	}
+        	else {
+        		result[k] = arr2[j];
+        		k++;
+        		j++;
+        	}
+        }
+        
+        // Artan elemanları ekleriz eğer kaldıysa
+        while(i < arr1.length) {
+        	result[k] = arr1[i];
+        	k++;
+        	i++;
+        }
+        while(j < arr2.length) {
+        	result[k] = arr2[j];
+        	k++;
+        	j++;
+        }
+
+        return result;
+	}
+	
+	
+	// DIZILERI YAZDIRMA KISMI
+	public static void printArray(int[] arr, int size) {
+        for (int i = 0; i < size; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+	
+}
