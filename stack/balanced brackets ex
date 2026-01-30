@@ -1,0 +1,54 @@
+import java.util.Stack;
+
+public class BalancedBrackets {
+
+    public static boolean isBalanced(String expression) {
+        Stack<Character> stack = new Stack<>();
+
+        // Metindeki her bir karakteri tarar
+        for (int i = 0; i < expression.length(); i++) {
+            char current = expression.charAt(i);
+
+            // 1. Eğer açılış paranteziyse Stack'e ekle
+            if (current == '(' || current == '{' || current == '[') {
+                stack.push(current);
+            } 
+            // 2. Eğer kapanış paranteziyse kontrol et
+            else if (current == ')' || current == '}' || current == ']') {
+                
+                // Stack boşsa, kapatacak açılış parantezi yoktur
+                if (stack.isEmpty()) {
+                    return false;
+                }
+
+                char lastOpened = stack.pop();
+
+                // Eşleşme kontrolü
+                if (!isMatchingPair(lastOpened, current)) {
+                    return false;
+                }
+            }
+        }
+
+        // Metin bittiğinde stack boş olmalı (kapatılmamış kalmamalı)
+        return stack.isEmpty();
+    }
+
+    // Yardımcı metot: Parantez çiftlerini eşleştirir
+    private static boolean isMatchingPair(char open, char close) {
+        if (open == '(' && close == ')') return true;
+        if (open == '{' && close == '}') return true;
+        if (open == '[' && close == ']') return true;
+        return false;
+    }
+
+    public static void main(String[] args) {
+        String test1 = "{[()]}";
+        String test2 = "{[(])}";
+        String test3 = "((()))";
+
+        System.out.println(test1 + " dengeli mi? " + isBalanced(test1)); // true
+        System.out.println(test2 + " dengeli mi? " + isBalanced(test2)); // false
+        System.out.println(test3 + " dengeli mi? " + isBalanced(test3)); // true
+    }
+}
