@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+import java.util.Collections;
+public class ArrayListOperations {
+
+	public static void main(String[] args) {
+		//  ArrayList Tanımlama
+    // Köşeli parantez yerine Generic <Integer> kullancaz
+		ArrayList<Integer> dinamikListe = new ArrayList<>();
+		
+		// Eleman Ekleme (Add) 
+		dinamikListe.add(10);
+		dinamikListe.add(20);
+		dinamikListe.add(30);
+		System.out.println("Baslangic Listesi: " + dinamikListe);
+		
+		// Araya Eleman Ekleme 
+    // sağdaki elemanların kayması gerekir (normal dizideki gibi).
+		dinamikListe.add(1,15); // 1. indexe 15 ekle
+		System.out.println("Araya ekleme sonrası: " + dinamikListe);
+		
+		// Elemana Erişme (Get) 
+    int eleman = dinamikListe.get(2);
+    System.out.println("2. indeksteki eleman: " + eleman);
+
+    // Eleman Silme (Remove) 
+    dinamikListe.remove(1); // 1. indeksteki elemanı sil (15 gider)
+    System.out.println("Silme sonrası: " + dinamikListe);
+
+    // Boyut Kontrolü
+    System.out.println("Listenin boyutu: " + dinamikListe.size());
+    
+    // Sıralama (Sorting) 
+    dinamikListe.add(5);
+    Collections.sort(dinamikListe);
+    System.out.println("Sıralanmış liste: " + dinamikListe);
+    
+    System.out.println("\n--- Arka Planda Ne Oluyor? ---");
+    simulateGrowth();
+        
+	}
+
+	
+    // "Dizi dolduğunda ArrayList nasıl büyür?"
+ 
+    public static void simulateGrowth() {
+        System.out.println("1. ArrayList başlangıçta belirli bir kapasiteyle (varsayılan 10) başlar.");
+        System.out.println("2. Kapasite dolduğunda, Java arka planda %50 daha büyük yeni bir dizi oluşturur.");
+        System.out.println("3. Eski dizideki tüm elemanlar yeni diziye kopyalanır (System.arraycopy).");
+        System.out.println("4. Eski dizi çöp toplayıcıya (Garbage Collector) gönderilir.");
+    }
+	
+}
