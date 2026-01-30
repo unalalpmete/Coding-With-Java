@@ -1,0 +1,113 @@
+
+public class BSTDeletion {
+
+    // Her bir düğümü temsil eden yapı
+    static class Node {
+        int key;
+        Node left, right;
+
+        public Node(int item) {
+            key = item;
+            left = right = null;
+        }
+    }
+
+    Node root;
+
+    public BSTDeletion() {
+        root = null;
+    }
+
+    // Silme işlemini başlatan dış metot
+    void deleteKey(int key) {
+        root = deleteRecursive(root, key);
+    }
+
+    
+    // Özyinelemeli silme mantığı.
+     
+    Node deleteRecursive(Node root, int key) {
+        // 1. TEMEL DURUM: Ağaç boşsa veya aranan değer bulunamadıysa
+        if (root == null) {
+            return root;
+        }
+
+        // 2. ARAMA ADIMI: Silinecek düğümü bulana kadar ağaçta ilerleriz
+        if (key < root.key) {
+            root.left = deleteRecursive(root.left, key);
+        } else if (key > root.key) {
+            root.right = deleteRecursive(root.right, key);
+        } 
+        
+        // 3. BULMA ADIMI: Eğer 'key' root.key'e eşitse silinecek düğüm bulunmus olur
+        else {
+            // DURUM 1 ve 2: Düğümün çocuğu yoksa (yaprak) veya tek çocuğu varsa
+            if (root.left == null) {
+                return root.right; // Sağ çocuğu yukarı taşı (null olsa bile)
+            } else if (root.right == null) {
+                return root.left;  // Sol çocuğu yukarı taşı
+            }
+
+            // DURUM 3: Düğümün iki çocuğu varsa
+            // Sağ alt ağacın en küçük değerini (Successor) buluyoruz
+            root.key = findMinValue(root.right);
+
+            // Bulduğumuz en küçük değeri sildiğimiz yerin yerine yazdık.
+            // Şimdi sağ taraftaki o küçük düğümü asıl yerinden silelim.
+            root.right = deleteRecursive(root.right, root.key);
+        }
+
+        return root;
+    }
+
+    // Bir alt ağacın en küçük değerini bulmak için sürekli sola gider
+    int findMinValue(Node root) {
+        int minv = root.key;
+        while (root.left != null) {
+            minv = root.left.key;
+            root = root.left;
+        }
+        return minv;
+    }
+
+    // Ağacı küçükten büyüğe yazdırmak için yardımcı metot
+    void inorder() {
+        inorderRecursive(root);
+        System.out.println();
+    }
+
+    private void inorderRecursive(Node root) {
+        if (root != null) {
+            inorderRecursive(root.left);
+            System.out.print(root.key + " ");
+            inorderRecursive(root.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        BSTDeletion tree = new BSTDeletion();
+
+        tree.root = new Node(50);
+        tree.root.left = new Node(30);
+        tree.root.right = new Node(70);
+        tree.root.left.left = new Node(20);
+        tree.root.left.right = new Node(40);
+        tree.root.right.left = new Node(60);
+        tree.root.right.right = new Node(80);
+
+        System.out.println("Başlangıç Ağacı (In-order):");
+        tree.inorder();
+
+        System.out.println("\n20 Siliniyor (Yaprak Düğüm)...");
+        tree.deleteKey(20);
+        tree.inorder();
+
+        System.out.println("\n30 Siliniyor (Tek Çocuklu)...");
+        tree.deleteKey(30);
+        tree.inorder();
+
+        System.out.println("\n50 Siliniyor (Kök - İki Çocuklu)...");
+        tree.deleteKey(50);
+        tree.inorder();
+    }
+}
