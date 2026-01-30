@@ -1,0 +1,86 @@
+
+public class BinarySearchTree {
+
+    // 1. Düğüm Yapısı
+    static class Node {
+        int value;
+        Node left, right;
+
+        Node(int value) {
+            this.value = value;
+            left = right = null;
+        }
+    }
+
+    Node root; // Ağacın en üstündeki düğüm
+
+    // 2. Ekleme İşlemi (Recursive/Özyinelemeli)
+    public void insert(int value) {
+        root = insertRecursive(root, value);
+    }
+
+    private Node insertRecursive(Node current, int value) {
+        // Eğer boş bir yer bulduysak yeni düğümü oraya koy
+        if (current == null) {
+            return new Node(value);
+        }
+
+        // Değer mevcut düğümden küçükse sola git
+        if (value < current.value) {
+            current.left = insertRecursive(current.left, value);
+        } 
+        // Değer mevcut düğümden büyükse sağa git
+        else if (value > current.value) {
+            current.right = insertRecursive(current.right, value);
+        }
+
+        return current;
+    }
+
+    // 3. Arama İşlemi - O(log n)
+    public boolean search(int value) {
+        return searchRecursive(root, value);
+    }
+
+    private boolean searchRecursive(Node current, int value) {
+        if (current == null) return false;
+        if (current.value == value) return true;
+
+        return value < current.value 
+            ? searchRecursive(current.left, value) 
+            : searchRecursive(current.right, value);
+    }
+
+    // 4. In-order Traversal (Küçükten Büyüğe Yazdır)
+    public void printInOrder() {
+        inOrderRecursive(root);
+        System.out.println();
+    }
+
+    private void inOrderRecursive(Node node) {
+        if (node != null) {
+            inOrderRecursive(node.left);  // Önce Sol
+            System.out.print(node.value + " "); // Sonra Kök
+            inOrderRecursive(node.right); // Sonra Sağ
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+
+        // Elemanları ekleyelim
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(70);
+        bst.insert(60);
+        bst.insert(80);
+
+        System.out.print("Sıralı Liste (In-order): ");
+        bst.printInOrder(); // Çıktı: 20 30 40 50 60 70 80
+
+        System.out.println("70 ağaçta var mı? " + bst.search(70));
+        System.out.println("99 ağaçta var mı? " + bst.search(99));
+    }
+}
