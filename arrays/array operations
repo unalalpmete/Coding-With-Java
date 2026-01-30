@@ -1,0 +1,68 @@
+
+// Bu sınıf, dizilerdeki temel işlemlerin (ekleme, silme, arama) 
+
+public class ArrayOperations {
+
+	public static void main(String[] args) {
+		// Sabit boyutlu dizi
+		int[] myArr = new int[10];
+		int currentSize = 0; // dizideki o anki eleman sayisi
+		
+		// Ekleme (Insertion) 
+		myArr[currentSize++] = 10; // ++ sag taragta yani önce o anki currentSize degerine 10u atıyoruz. 
+		myArr[currentSize++] = 20; // sonra currentSize ı 1 arttırıyoruz.
+		myArr[currentSize++] = 30;
+
+		System.out.println("Başlangıç Dizisi:");
+	    printArray(myArr, currentSize);
+	    
+	    // Araya Ekleme 
+        // İndeks 1'e (20'nin olduğu yer) 15 ekleyelim. 
+        // 20 ve 30'u sağa kaydırmamız gerekiyor
+	    int insertIndex = 1;
+	    int newValue = 15;
+	    
+	    for(int i=currentSize; i>insertIndex; i--) {
+	    	myArr[i] = myArr[i-1]; // Elemanları sağa kaydırıyoruz
+	    	// Bu konuma gelecek olan veri, onun bir solundaki veridir. 
+	    	// Mesela indexi 2 olan yere indexi 1 olan yerdeki eleman gelcek. (saga kaydırmak icin)
+	    }
+	    
+	    myArr[insertIndex] = newValue;
+	    currentSize++;
+	    
+	    System.out.println("\n1. İndekse 15 eklendikten sonra (Kaydırma yapıldı):");
+        printArray(myArr, currentSize);
+        
+        // Silme (Deletion)
+        // İndeks 2'deki elemanı silelim. Boşluk kalmaması için sağdakiler sola kaymalı.
+        int deleteIndex = 2;
+        for (int i = deleteIndex; i < currentSize - 1; i++) {
+            myArr[i] = myArr[i + 1]; // Elemanları sola kaydırıyoruz
+        }
+        currentSize--;
+
+        System.out.println("\n2. İndeks silindikten sonra Sola kaydırma yapılmıs hali:");
+        printArray(myArr, currentSize);
+	    
+        // Arama (Search)
+        int target = 30;
+        int foundIndex = -1;
+        for (int i = 0; i < currentSize; i++) {
+            if (myArr[i] == target) {
+                foundIndex = i;
+                break;
+            }
+        }
+        System.out.println("\n30 sayısı bu indekste bulundu: " + foundIndex);
+        
+	}
+
+	public static void printArray(int[] arr, int size) {
+		for(int i=0; i<size; i++) {
+			System.out.print(arr[i] + " ");
+		}
+		System.out.println();
+	}
+	
+}
