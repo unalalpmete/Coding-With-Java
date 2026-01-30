@@ -1,0 +1,40 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapDemo {
+    public static void main(String[] args) {
+        //  HashMap Tanımlama <Anahtar Tipi, Değer Tipi>
+        HashMap<String, Integer> stoklar = new HashMap<>();
+
+        //  Veri Ekleme (Put)
+        stoklar.put("Elma", 50);
+        stoklar.put("Armut", 30);
+        stoklar.put("Muz", 100);
+        
+        // Aynı anahtarla ekleme yaparsak değeri günceller
+        stoklar.put("Elma", 80); 
+
+        //  Veri Erişimi (Get)
+        System.out.println("Elma stoku: " + stoklar.get("Elma"));
+        
+        // Olmayan bir anahtar sorgulanırsa 'null' döner
+        System.out.println("Çilek stoku: " + stoklar.get("Çilek"));
+
+        // Anahtar Kontrolü
+        if (stoklar.containsKey("Muz")) {
+            System.out.println("Muz stokta var!");
+        }
+
+        // Silme İşlemi
+        stoklar.remove("Armut");
+
+        // Döngü ile Gezme (EntrySet)
+        System.out.println("\n--- Güncel Stok Listesi ---");
+        for (Map.Entry<String, Integer> entry : stoklar.entrySet()) {
+            System.out.println("Ürün: " + entry.getKey() + " | Miktar: " + entry.getValue());
+        }
+
+        // Boyut Bilgisi
+        System.out.println("Toplam farklı ürün sayısı: " + stoklar.size());
+    }
+}
