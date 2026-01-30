@@ -1,0 +1,90 @@
+import java.util.Arrays;
+
+
+public class SortingLab {
+
+    // MERGE SORT 
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+
+            // Sıralı yarıları birleştir
+            merge(arr, left, mid, right);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right) {
+        // Geçici(temporary) dizilerin boyutlarını hesapla
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        // Verileri geçici dizilere kopyalıyoruz
+        for (int i = 0; i < n1; ++i) L[i] = arr[left + i];
+        for (int j = 0; j < n2; ++j) R[j] = arr[mid + 1 + j];
+
+        // Birleştirme işlemi
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) arr[k++] = L[i++];
+            else arr[k++] = R[j++];
+        }
+
+        // Kalan elemanları kopyalarız
+        while (i < n1) arr[k++] = L[i++];
+        while (j < n2) arr[k++] = R[j++];
+    }
+
+    // QUICK SORT 
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // Partition indeksini bul
+            int pi = partition(arr, low, high);
+
+            // Pivotun solunu ve sağını ayrı ayrı sıralarız
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high]; // Son elemanı pivot seçiyoruz (genelde)
+        int i = (low - 1); // Küçük olan elemanın indeksi
+
+        for (int j = low; j < high; j++) {
+            // Mevcut eleman pivottan küçükse
+            if (arr[j] < pivot) {
+                i++;
+                // Swap işlemi
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Pivotu doğru yere koy (Swap)
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr1 = {38, 27, 43, 3, 9, 82, 10};
+        int[] arr2 = {38, 27, 43, 3, 9, 82, 10};
+
+        System.out.println("Orijinal Dizi: " + Arrays.toString(arr1));
+
+        mergeSort(arr1, 0, arr1.length - 1);
+        System.out.println("Merge Sort Sonucu: " + Arrays.toString(arr1));
+
+        quickSort(arr2, 0, arr2.length - 1);
+        System.out.println("Quick Sort Sonucu: " + Arrays.toString(arr2));
+    }
+}
